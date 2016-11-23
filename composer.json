@@ -1,0 +1,16 @@
+{
+    "name": "p0628950/gentelella",
+    "description": "dashboard",
+    "authors": [
+        {
+            "name": "Cadmiel Jorge",
+            "email": "cadmieljorge@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Reports\\": "src/Reports/"
+        }
+    },
+    "require": {}
+}
