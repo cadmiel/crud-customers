@@ -16,7 +16,6 @@ class Manager
 
     public function address(IManager $obj, $array, $customer_id)
     {
-        if(count($array) >0)
         foreach ($array as $item) {
             if (strlen($item) > 1)
                 $obj->save(array('address' => $item, 'customer_id' => $customer_id));
@@ -25,19 +24,17 @@ class Manager
 
     public function emails(IManager $obj, $array, $customer_id)
     {
-        if(count($array) >0)
         foreach ($array as $item) {
-            if (strlen($item) > 1 AND !empty(filter_var($item,FILTER_VALIDATE_EMAIL)) )
+            if (strlen($item) > 1)
                 $obj->save(array('email' => $item, 'customer_id' => $customer_id));
         }
     }
 
     public function fone(IManager $obj, $array, $customer_id)
     {
-        if(count($array) >0)
         foreach ($array as $item) {
             if (strlen($item) > 1)
-                $obj->save(array('fone' => $this->numberOnly( $item ), 'customer_id' => $customer_id));
+                $obj->save(array('fone' => $item, 'customer_id' => $customer_id));
         }
     }
 
@@ -53,7 +50,4 @@ class Manager
         }
     }
 
-    public function numberOnly($str) {
-        return preg_replace("/[^0-9]/", "", $str);
-    }
 }
