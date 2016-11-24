@@ -18,10 +18,7 @@ if (isset($_GET['id'])) {
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label col-md-3" for="first-name">Enviar email para:</label>
-
-                    <div class="col-md-7">
-
+                    <label class="control-label" for="first-name">Enviar email para:</label>
                         <?php if (!is_null($obj->data)):
                             $emails->getEmailsById($obj->data->id);
                             ?>
@@ -32,18 +29,14 @@ if (isset($_GET['id'])) {
                                 <?php endforeach; ?>
                             </select>
                         <?php endif; ?>
-                    </div>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label col-md-3" for="first-name">Mensagem</label>
-
-                    <div class="col-md-7">
+                    <label class="control-label" for="first-name">Mensagem</label>
                         <textarea class="form-control" id="msg" name="msg"></textarea>
                         <input type="hidden" id="id" value="<?php echo(is_null($obj->data) ? 0 : $obj->data->id) ?>">
-                    </div>
                 </div>
             </div>
 

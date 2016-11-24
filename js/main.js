@@ -3,19 +3,19 @@ $(document).ready(function(){
     body = $('body');
 
     body.on('click','.newFone', function () {
-        inputs('Fone','fone');
+        inputs('Fone', 'fone', 'fone');
     });
 
     body.on('click','.newAddress', function () {
-        inputs('Address','address');
+        inputs('Address', 'address', 'address');
     });
 
     body.on('click','.newEmail', function () {
-        inputs('Email','email');
+        inputs('Email', 'email', 'email');
     });
 
     body.on('click', '#remove', function () {
-        $(this).parents('p').remove();
+        $(this).parents('.cd').remove();
         return false;
     });
 
@@ -26,72 +26,107 @@ $(document).ready(function(){
             url: 'src/Request/Form.php',
             data: {data:''},
             success: function (data) {
-                $('.modal-body').html(data);
+                $('.modal-body').html(data).mask("999.999.999-99");
+                body.find('.modal-body').find('.fone').mask("(99) 99999-9999");
+                body.find('.modal-body').find(".cpf").mask("999.999.999-99");
+                body.find('.modal-body').find(".cnpj").mask("99.999.999/9999-99");
             }
         });
     });
 
+    body.on('change','.type',function(){
+        if($(this).val() == 1) {
+            body.find('#label-document').text('CPF');
+            body.find('.document').removeClass('cnpj');
+            body.find('.document').addClass('cpf');
+        }else {
+            body.find('#label-document').text('CNPJ');
+            body.find('.document').removeClass('cpf');
+            body.find('.document').addClass('cnpj');
+        }
+        body.find('.document').val('');
+        body.find('.modal-body').find(".cpf").mask("999.999.999-99");
+        body.find('.modal-body').find(".cnpj").mask("99.999.999/9999-99");
+    });
+
     body.on('click','.btn_send',function(){
+
         to = $('#sendTo').val();
         msg  = $('#msg').val();
         id  = $('#id').val();
 
-        $.ajax({
-            type: "post",
-            cache: false,
-            url: 'src/Request/Save.php',
-            data: {to:to,msg:msg,id:id,acao:'send-email'},
-            beforeSend: function () {
-                $('.callBack')
-                    .html(carregando('alert-info', 'Por favor aguarde, salvando...'))
-                    .slideDown('show');
-            },
-            success: function (data) {
-                $('.modal-body').html(data);
-                //$('.modal').modal('toggle');
-                //listar(body);
-                callback(body,'Emails enviado com sucesso!!!');
-            }
-        });
+        if(msg.length > 2 ) {
+            $(this).prop('disabled',true);
+            $.ajax({
+                type: "post",
+                cache: false,
+                url: 'src/Request/Save.php',
+                data: {to: to, msg: msg, id: id, acao: 'send-email'},
+                beforeSend: function () {
+                    $('.callBack')
+                        .html(carregando('alert-info', 'Por favor aguarde, salvando...'))
+                        .slideDown('show');
+                },
+                success: function (data) {
+                    $('.modal-body').html(data);
+                    $('.modal').modal('toggle');
+                    listar(body);
+                    callback(body, 'Emails enviado com sucesso!!!');
+                }
+            });
+        }else {
+            $('.callBack')
+                .html('<div class="alert alert-danger">Campo nome e cpf/cnpj são obrigatórios</div>')
+                .slideDown('show');
+        }
     });
 
     body.on('click','.btn_save',function(){
 
         name = $('#first-name2').val();
-        id  = $('#id').val();
+        type  = $('#type').val();
+        documentt  = $('#document').val();
 
-        var fone = new Array();
-        $.each($('input[id="fone"]'),function(key,value){
-            fone.push($(value).val());
-        });
+        if(name.length > 2 && documentt.length >= 11) {
+            id = $('#id').val();
 
-        var address = new Array();
-        $.each($('input[id="address"]'),function(key,value){
-            address.push($(value).val());
-        });
+            var fone = new Array();
+            $.each($('input[id="fone"]'), function (key, value) {
+                fone.push($(value).val());
+            });
 
-        var email = new Array();
-        $.each($('input[id="email"]'),function(key,value){
-            email.push($(value).val());
-        });
+            var address = new Array();
+            $.each($('input[id="address"]'), function (key, value) {
+                address.push($(value).val());
+            });
 
-        $.ajax({
-            type: "post",
-            cache: false,
-            url: 'src/Request/Save.php',
-            data: {name:name,fone:fone,email:email,address:address, id:id},
-            beforeSend: function () {
-                $('.callBack')
-                    .html(carregando('alert-info', 'Por favor aguarde, salvando...'))
-                    .slideDown('show');
-            },
-            success: function (data) {
-                $('.modal-body').html(data);
-                $('.modal').modal('toggle');
-                listar(body);
-                callback(body,'Registro excluído com sucesso!!!');
-            }
-        });
+            var email = new Array();
+            $.each($('input[id="email"]'), function (key, value) {
+                email.push($(value).val());
+            });
+
+            $.ajax({
+                type: "post",
+                cache: false,
+                url: 'src/Request/Save.php',
+                data: {name: name, fone: fone, email: email, address: address, id: id,document:documentt, type:type},
+                beforeSend: function () {
+                    $('.callBack')
+                        .html(carregando('alert-info', 'Por favor aguarde, salvando...'))
+                        .slideDown('show');
+                },
+                success: function (data) {
+                    $('.modal-body').html(data);
+                    $('.modal').modal('toggle');
+                    listar(body);
+                    callback(body, 'Registro excluído com sucesso!!!');
+                }
+            });
+        }else{
+            $('.callBack')
+                .html('<div class="alert alert-danger">Campo nome e cpf/cnpj são obrigatórios</div>')
+                .slideDown('show');
+        }
     });
 
     body.on('click','.btn_destroy',function() {
@@ -121,7 +156,13 @@ $(document).ready(function(){
                     .slideDown('show');
             },
             success: function (data) {
+
                 $('.modal-body').html(data);
+                body.find('.fone').mask("(99) 99999-9999");
+                body.find('.modal-body').find('.fone').mask("(99) 99999-9999");
+                body.find('.modal-body').find(".cpf").mask("999.999.999-99");
+                body.find('.modal-body').find(".cnpj").mask("99.999.999/9999-99");
+
             }
         });
     });
@@ -147,13 +188,13 @@ $(document).ready(function(){
 
 });
 
-inputs = function(suffix,id){
+inputs = function(suffix,id,cls){
     var div = $('.dynamic'+suffix);
-    $('<p>'+
-        '<input type="text" class="" id="'+id+'" value="" placeholder="" /> '+
-        '<a class="btn btn-danger" href="javascript:void(0)" id="remove">'+
+    $('<div class="cd"><p>'+
+        '<div class="col-md-6"><input type="text" class="form-control '+cls+'" id="'+id+'" value="" placeholder="" /> </div>'+
+        '<a class="btn btn-danger" id="remove">'+
         '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </a>'+
-        '</p>').appendTo(div);
+        '</p></div>').appendTo(div).find('.fone').mask("(99) 99999-9999");
     return false
 }
 

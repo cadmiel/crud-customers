@@ -22,16 +22,20 @@ class Customers implements IManager
         if(is_array($this->data) AND isset($this->data['id']) AND $this->data['id'] != 0)
             return $this->update();
 
-        $stmt = $this->connection->prepare('INSERT INTO '.$this->table.' (name) VALUES(:name)');
+        $stmt = $this->connection->prepare('INSERT INTO '.$this->table.' (name,type,document) VALUES(:name,:type,:document)');
         $stmt->bindValue(':name', $this->data['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':document', $this->data['document'], PDO::PARAM_STR);
+        $stmt->bindValue(':type', $this->data['type'], PDO::PARAM_STR);
         $stmt->execute();
         $this->data = $this->connection->lastInsertId();
     }
 
     protected function update(){
-        $stmt = $this->connection->prepare('UPDATE '.$this->table.' SET name=:name WHERE id=:id');
+        $stmt = $this->connection->prepare('UPDATE '.$this->table.' SET name=:name, type=:type, document=:document WHERE id=:id');
         $stmt->bindValue(':id', $this->data['id'], PDO::PARAM_INT);
         $stmt->bindValue(':name', $this->data['name'], PDO::PARAM_STR);
+        $stmt->bindValue(':document', $this->data['document'], PDO::PARAM_STR);
+        $stmt->bindValue(':type', $this->data['type'], PDO::PARAM_STR);
         $stmt->execute();
         $this->data = $this->data['id'];
     }

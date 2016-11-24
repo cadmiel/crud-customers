@@ -15,6 +15,8 @@ foreach ($obj->data as $item):
             </div>
         </td>
         <td><?php echo $item->name; ?></td>
+        <td><?php echo ($item->type==1)?'CPF':'CNPJ'; ?></td>
+        <td><?php echo $item->document; ?></td>
         <td>
             <?php if (count($emails_->data) != 0): ?>
                 <i data-toggle="modal" data-target=".bs-example-modal-lg" data-id="<?php echo $item->id; ?>"
