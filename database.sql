@@ -20,8 +20,10 @@ USE `reports`;
 CREATE TABLE IF NOT EXISTS `customers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '0',
+  `type` char(4) NOT NULL DEFAULT '0',
+  `document` char(15) NOT NULL DEFAULT '0',
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela reports.customers: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
@@ -37,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `customer_address` (
   CONSTRAINT `fk_address_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela reports.customer_address: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela reports.customer_address: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `customer_address` DISABLE KEYS */;
 /*!40000 ALTER TABLE `customer_address` ENABLE KEYS */;
 
@@ -51,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `customer_emails` (
   CONSTRAINT `fk_email_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela reports.customer_emails: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela reports.customer_emails: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `customer_emails` DISABLE KEYS */;
 /*!40000 ALTER TABLE `customer_emails` ENABLE KEYS */;
 
@@ -65,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `customer_fone` (
   CONSTRAINT `fk_fone_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela reports.customer_fone: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela reports.customer_fone: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `customer_fone` DISABLE KEYS */;
 /*!40000 ALTER TABLE `customer_fone` ENABLE KEYS */;
 

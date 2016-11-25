@@ -13,21 +13,7 @@ if (isset($acao) AND $acao == 'destroy') {
 
     $customer->getCustomerById($id);
     $customer->data = $customer->data->id;
-
-    /* Address */
-    $address_->getAddressById($customer->data);
-    $manager->destroy($address_, $customer->data);
-
-    /* emails */
-    $emails_->getEmailsById($customer->data);
-    $manager->destroy($emails_, $customer->data);
-
-    /* fone */
-    $fone_->getFoneById($customer->data);
-    $manager->destroy($fone_, $customer->data);
-
-    /* customer */
-    $manager->destroy($customer, $customer->data);
+    $customer->destroy($customer->data);
 
 } elseif (isset($acao) AND $acao == 'send-email') {
 
@@ -65,8 +51,6 @@ if (isset($acao) AND $acao == 'destroy') {
     $fone_->getFoneById($customer->data);
     $manager->destroy($fone_, $customer->data);
     $manager->save($fone_, @$fone, $customer->data, 'fone');
-
-
 
 }
 

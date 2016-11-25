@@ -1,22 +1,21 @@
 <?php
 namespace Reports;
 
-
 class Send
 {
     public $data;
-    protected $charSet  =   'UTF-8';
-    protected $port     =   '';
-    protected $userName =   '';
-    protected $password =   '';
+    protected $charSet  =   EMAIL_CHARSET;
+    protected $port     =   EMAIL_PORT;
+    protected $userName =   EMAIL_USER;
+    protected $password =   EMAIL_PASSWORD;
     protected $subject  =   '';
     protected $msgHTML  =   '';
     protected $to       =   '';
     protected $toName   =   '';
     protected $phpmailer=   '';
-    protected $From     =   '';
-    protected $FromName =   'Crud-customers';
-    protected $host     =   '';
+    protected $From     =   EMAIL_FROM;
+    protected $FromName =   EMAIL_FROM_NAME;
+    protected $host     =   EMAIL_HOST;
 
     public function __construct(Phpmailer $phpmailer, $to, $toName, $subject, $msgHTML)
     {
@@ -31,13 +30,13 @@ class Send
 
         $this->phpmailer->isSMTP();
         $this->phpmailer->CharSet = $this->charSet;
-        $this->phpmailer->SMTPDebug = 0;
+        $this->phpmailer->SMTPDebug = EMAIL_DEBUG;
         $this->phpmailer->Debugoutput = 'html';
         $this->phpmailer->Host = $this->host;
         $this->phpmailer->Port = $this->port;
         
-        $this->phpmailer->SMTPSecure= 'tls';
-        $this->phpmailer->SMTPAuth  = true;
+        $this->phpmailer->SMTPSecure= EMAIL_SMTP_SECURE;
+        $this->phpmailer->SMTPAuth  = EMAIL_SMTP_AUTH;
         $this->phpmailer->Username  = $this->userName;
         $this->phpmailer->Password  = $this->password;
 

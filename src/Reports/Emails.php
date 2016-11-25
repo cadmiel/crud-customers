@@ -1,7 +1,5 @@
 <?php
-
 namespace Reports;
-
 use \PDO as PDO;
 
 class Emails implements IManager

@@ -10,7 +10,9 @@
     "autoload": {
         "psr-4": {
             "Reports\\": "src/Reports/"
-        }
+        },"files": [
+            "src/Config/Config.php"
+        ]
     },
     "require": {}
 }

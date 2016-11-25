@@ -1,5 +1,4 @@
 <?php
-
 namespace Reports;
 
 class PhpmailerException extends \Exception

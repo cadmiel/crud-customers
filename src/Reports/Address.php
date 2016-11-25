@@ -1,5 +1,4 @@
 <?php
-
 namespace Reports;
 use \PDO as PDO;
 

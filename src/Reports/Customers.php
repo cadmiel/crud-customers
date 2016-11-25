@@ -1,5 +1,4 @@
 <?php
-
 namespace Reports;
 use \PDO as PDO;
 
@@ -41,7 +40,7 @@ class Customers implements IManager
     }
 
     public function destroy($id){
-        $stmt = $this->connection->prepare('DELETE FROM '.$this->table.' where id=:id');
+        $stmt = $this->connection->prepare('call delete_customer(:id)');
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
     }
