@@ -6,16 +6,17 @@ class Send
 {
     public $data;
     protected $charSet  =   'UTF-8';
-    protected $port     =   587;
-    protected $userName =   'AKIAJ7V4OR57DIQPOZMA';
-    protected $password =   'AofyqIsT8ucxqWw1ltc9tq0dlXD0pkc5YhNMoeXl8AxD';
+    protected $port     =   '';
+    protected $userName =   '';
+    protected $password =   '';
     protected $subject  =   '';
     protected $msgHTML  =   '';
     protected $to       =   '';
     protected $toName   =   '';
     protected $phpmailer=   '';
-    protected $From     =   'no-reply@corretormulticanal.com.br';
+    protected $From     =   '';
     protected $FromName =   'Crud-customers';
+    protected $host     =   '';
 
     public function __construct(Phpmailer $phpmailer, $to, $toName, $subject, $msgHTML)
     {
@@ -32,7 +33,7 @@ class Send
         $this->phpmailer->CharSet = $this->charSet;
         $this->phpmailer->SMTPDebug = 0;
         $this->phpmailer->Debugoutput = 'html';
-        $this->phpmailer->Host = 'email-smtp.us-east-1.amazonaws.com';
+        $this->phpmailer->Host = $this->host;
         $this->phpmailer->Port = $this->port;
         
         $this->phpmailer->SMTPSecure= 'tls';
