@@ -12,6 +12,8 @@ class Manager
             $this->emails($obj, $array, $customer_id);
         elseif ($mth == 'fone')
             $this->fone($obj, $array, $customer_id);
+        elseif ($mth == 'socialName')
+            $this->socialName($obj, $array, $customer_id);
     }
 
     public function address(IManager $obj, $array, $customer_id)
@@ -39,6 +41,12 @@ class Manager
             if (strlen($item) > 1)
                 $obj->save(array('fone' => $this->numberOnly( $item ), 'customer_id' => $customer_id));
         }
+    }
+
+    public function socialName(IManager $obj, $item, $customer_id)
+    {
+            if (strlen($item) > 1)
+                $obj->save(array('social_name' => $item , 'customer_id' => $customer_id));
     }
 
     public function destroy(IManager $obj, $id)

@@ -2,10 +2,10 @@
 namespace Reports;
 use \PDO as PDO;
 
-class Emails implements IManager
+class SocialName implements IManager
 {
 
-    protected $table = TABLE_CUSTOMER_EMAILS;
+    protected $table = TABLE_CUSTOMER_SOCIAL_NAME;
     public $connection;
     public $data = null;
 
@@ -18,9 +18,9 @@ class Emails implements IManager
     {
 
         $this->data = $data;
-        $stmt = $this->connection->prepare('INSERT INTO ' . $this->table . ' (customer_id,email) VALUES(:customer_id,:email)');
+        $stmt = $this->connection->prepare('INSERT INTO ' . $this->table . ' (customer_id,social_name) VALUES(:customer_id,:social_name)');
         $stmt->bindValue(':customer_id', $this->data['customer_id'], PDO::PARAM_INT);
-        $stmt->bindValue(':email', $this->data['email'], PDO::PARAM_STR);
+        $stmt->bindValue(':social_name', $this->data['social_name'], PDO::PARAM_STR);
         $stmt->execute();
         $this->data = $this->connection->lastInsertId();
     }
@@ -33,25 +33,17 @@ class Emails implements IManager
         $stmt->execute();
     }
 
-    public function getAllEmails()
+    public function getAllSocialName()
     {
         $stmt = $this->connection->prepare('SELECT * FROM ' . $this->table);
         $stmt->execute();
         $this->data = $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getEmailsById($customer_id)
+    public function getSocialNameById($customer_id)
     {
         $stmt = $this->connection->prepare('SELECT * FROM ' . $this->table . ' where customer_id=:customer_id');
         $stmt->bindValue(':customer_id', $customer_id, PDO::PARAM_INT);
-        $stmt->execute();
-        $this->data = $stmt->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    public function getEmailsByIdCustomer($customer_id)
-    {
-        $stmt = $this->connection->prepare('SELECT * FROM ' . $this->table . ' where id=:id');
-        $stmt->bindValue(':id', $customer_id, PDO::PARAM_INT);
         $stmt->execute();
         $this->data = $stmt->fetch(PDO::FETCH_OBJ);
     }

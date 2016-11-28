@@ -1,9 +1,11 @@
 <?php
 require __DIR__ . '/../../vendor/autoload.php';
 $obj = new \Reports\Customers();
-$obj->getAllCustomers();
+extract($_GET);
+$obj->getAllCustomers($search);
 $emails_ = new \Reports\Emails();
 
+if($obj->data):
 foreach ($obj->data as $item):
     $emails_->getEmailsById($item->id);
     ?>
@@ -15,7 +17,8 @@ foreach ($obj->data as $item):
             </div>
         </td>
         <td><?php echo $item->name; ?></td>
-        <td><?php echo ($item->type==1)?'CPF':'CNPJ'; ?></td>
+        <td><?php echo $item->social_name; ?></td>
+        <td><?php echo $item->type; ?></td>
         <td><?php echo $item->document; ?></td>
         <td>
             <?php if (count($emails_->data) != 0): ?>
@@ -32,4 +35,6 @@ foreach ($obj->data as $item):
                class="glyphicon glyphicon-remove btn_destroy" aria-hidden="true"></i>
         </td>
     </tr>
-<?php endforeach; ?>
+<?php endforeach; else: ?>
+<tr><td colspan="7" align="center">Nenhum registro encontrado!!!</td></tr>
+<?php endif; ?>

@@ -23,7 +23,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Alela!</span></a>
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Dashboard</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -177,12 +177,21 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="dashboard_graph">
                 <div class="row x_title">
-                  <div class="col-md-10">
+                  <div class="col-md-7">
                     <h3>Relatório de clientes</h3>
                   </div>
-                  <div class="col-md-2">
-                    <button type="button" class="btn btn-round btn-success btn-custom" data-toggle="modal" data-target=".bs-example-modal-lg">Novo cliente</button>
-                  </div>
+
+                    <div class="col-md-5 pull-right">
+                        <form class="navbar-form search">
+                            <div class="form-group">
+                                <input type="text" id="search" class="form-control btn-round" placeholder="Pesquisar por... .">
+                            </div>
+                            <button type="submit" class="btn btn-round btn-primary">Ok</button>
+                            <button type="button" class="btn btn-round btn-success btn-custom pull-rigsht" data-toggle="modal" data-target=".bs-example-modal-lg">Novo cliente</button>
+                        </form>
+
+                    </div>
+
                 </div>
                 <div class="clearfix"></div>
               </div>
@@ -201,6 +210,7 @@
                       <th>Id</th>
                       <th>Foto</th>
                       <th>Nome</th>
+                      <th>Razão social</th>
                       <th>Pessoa</th>
                       <th>Documento</th>
                       <th>Ações</th>
@@ -237,7 +247,7 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">Formulário de cliente</h4>
+            <h4 class="modal-title" id="myModalLabel"></h4>
           </div>
           <div class="modal-body"></div>
         </div>

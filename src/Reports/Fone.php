@@ -5,7 +5,7 @@ use \PDO as PDO;
 class Fone implements IManager
 {
 
-    protected $table = 'customer_fone';
+    protected $table = TABLE_CUSTOMER_FONE;
     public $connection;
     public $data = null;
 

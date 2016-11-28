@@ -1,13 +1,17 @@
 <?php
 require __DIR__ . '/../../vendor/autoload.php';
 
-$obj = new \Reports\Customers();
-$fone = new \Reports\Fone();
-$address = new \Reports\Address();
-$emails = new \Reports\Emails();
+$obj            = new \Reports\Customers();
+$fone           = new \Reports\Fone();
+$address        = new \Reports\Address();
+$emails         = new \Reports\Emails();
+$socialName     = new \Reports\SocialName();
 
-if (isset($_GET['id']))
+
+if (isset($_GET['id'])){
     $obj->getCustomerById($_GET['id']);
+    $socialName->getSocialNameById($obj->data->id);
+}
 
 ?>
 <div class="row">
@@ -24,22 +28,22 @@ if (isset($_GET['id']))
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label" for="first-name">Pessoa física ou jurídica:</label>
                         <select name="type" class="form-control type" id="type">
                             <?php if(is_null($obj->data)): ?>
-                                <option selected value="1">CPF</option>
-                                <option value="2">CNPJ</option>
+                                <option selected value="1">Física</option>
+                                <option value="2">Juridica</option>
                             <?php else: ?>
-                                <option value="1" <?php echo( ($obj->data->type == 1) ? 'selected':''); ?> >CPF</option>
-                                <option value="2" <?php echo( ($obj->data->type == 2) ? 'selected':'') ?> >CNPJ</option>
+                                <option value="1" <?php echo( ($obj->data->type == 1) ? 'selected':''); ?> >Física</option>
+                                <option value="2" <?php echo( ($obj->data->type == 2) ? 'selected':'') ?> >Juridica</option>
                             <?php endif; ?>
                         </select>
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label class="control-label" for="document" id="label-document">
                         <?php if(is_null($obj->data)): ?>
@@ -50,6 +54,16 @@ if (isset($_GET['id']))
                     </label>
                     <input value="<?php echo(is_null($obj->data) ? '' : $obj->data->document) ?>" type="text"
                            id="document" required="required" class="form-control <?php echo((is_null($obj->data) || (isset($obj->data) AND $obj->data->type == 1)) ? 'cpf' :'cnpj') ?> document">
+                </div>
+            </div>
+
+            <div class="col-md-5 social_name">
+                <div class="form-group">
+                    <label class="control-label" for="document" id="label-document">
+                        Razão social
+                    </label>
+                    <input value="<?php echo(is_null($obj->data) ? '' : $socialName->data->social_name) ?>" type="text"
+                           id="social_name" required="required" class="form-control">
                 </div>
             </div>
 
@@ -82,7 +96,7 @@ if (isset($_GET['id']))
             <div class="col-md-12">
                 <a class="btn btn-primary newAddress" id="addInput">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    Add Address
+                    Add Endereço
                 </a>
 
                 <br/>

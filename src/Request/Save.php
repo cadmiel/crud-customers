@@ -1,11 +1,12 @@
 <?php
 require __DIR__ . '/../../vendor/autoload.php';
 
-$customer = new \Reports\Customers();
-$address_ = new \Reports\Address();
-$emails_ = new \Reports\Emails();
-$fone_ = new \Reports\Fone();
-$manager = new \Reports\Manager();
+$customer       = new \Reports\Customers();
+$address_       = new \Reports\Address();
+$emails_        = new \Reports\Emails();
+$fone_          = new \Reports\Fone();
+$socialName_    = new \Reports\SocialName();
+$manager        = new \Reports\Manager();
 
 extract($_POST);
 
@@ -51,6 +52,11 @@ if (isset($acao) AND $acao == 'destroy') {
     $fone_->getFoneById($customer->data);
     $manager->destroy($fone_, $customer->data);
     $manager->save($fone_, @$fone, $customer->data, 'fone');
+
+    /* socialName */
+    $socialName_->getSocialNameById($customer->data);
+    $manager->destroy($socialName_, $customer->data);
+    $manager->save($socialName_, @$socialName, $customer->data, 'socialName');
 
 }
 

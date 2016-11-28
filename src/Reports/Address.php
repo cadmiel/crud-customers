@@ -5,7 +5,7 @@ use \PDO as PDO;
 class Address implements IManager
 {
 
-    protected $table = 'customer_address';
+    protected $table = TABLE_CUSTOMER_ADDRESS;
     public $connection;
     public $data = null;
 

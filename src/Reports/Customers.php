@@ -5,7 +5,7 @@ use \PDO as PDO;
 class Customers implements IManager
 {
 
-    protected $table = 'customers';
+    protected $table = TABLE_CUSTOMERS;
     public $connection;
     public $data = null;
 
@@ -40,13 +40,14 @@ class Customers implements IManager
     }
 
     public function destroy($id){
-        $stmt = $this->connection->prepare('call delete_customer(:id)');
+        $stmt = $this->connection->prepare('call  '.PROCEDURE_DELETE_CUSTOMER.'(:id)');
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
     }
 
-    public function getAllCustomers(){
-        $stmt = $this->connection->prepare('SELECT * FROM '.$this->table);
+    public function getAllCustomers($search){
+        $stmt = $this->connection->prepare('SELECT * FROM '.VIEW_CUSTOMERS.' where name like :search OR type like :search OR social_name like :search OR document like :search OR email like :search');
+        $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
         $stmt->execute();
         $this->data = $stmt->fetchAll(PDO::FETCH_OBJ);
     }
